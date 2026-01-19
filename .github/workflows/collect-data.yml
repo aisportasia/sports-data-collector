@@ -1,0 +1,17 @@
+name: Collect Sports Data
+
+on:
+  schedule:
+    # Runs every 6 hours (at 00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  collect-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Data Collection
+        run: |
+          curl -X POST \
+            -H "x-api-key: ${{ secrets.SCHEDULER_API_KEY }}" \
+            https://good-squirrel-360.convex.site/api/collect
